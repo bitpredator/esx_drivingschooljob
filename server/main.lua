@@ -1,6 +1,5 @@
 ESX = nil
-
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+ESX = exports["es_extended"]:getSharedObject()
 
 if Config.MaxInService ~= -1 then
   TriggerEvent('esx_service:activateService', 'driving', Config.MaxInService)
@@ -8,8 +7,6 @@ end
 
 -- TriggerEvent('esx_phone:registerNumber', 'driving', _U('alert_driving'), true, true)
 TriggerEvent('esx_society:registerSociety', 'driving', 'Driving', 'society_driving', 'society_driving', 'society_driving', {type = 'public'})
-
-
 
 RegisterServerEvent('esx_drivingschooljob:getStockItem')
 AddEventHandler('esx_drivingschooljob:getStockItem', function(itemName, count)
@@ -74,7 +71,6 @@ end)
 --end)
 
 ESX.RegisterServerCallback('esx_drivingschooljob:getPlayerInventory', function(source, cb)
-
   local xPlayer    = ESX.GetPlayerFromId(source)
   local items      = xPlayer.inventory
 
@@ -103,5 +99,3 @@ AddEventHandler('esx_drivingschooljob:pay', function(price)
 	xPlayer.removeMoney(price)
 	TriggerClientEvent('esx:showNotification', _source, _U('you_paid', ESX.Math.GroupDigits(price)))
 end)
-
-

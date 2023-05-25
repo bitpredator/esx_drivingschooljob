@@ -26,14 +26,11 @@ local CurrentTestType         = nil
 ESX                           = nil
 GUI.Time                      = 0
 
-Citizen.CreateThread(function()
-    while ESX == nil do
-		    TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-		    Citizen.Wait(0)
-	  end
+CreateThread(function()
+  ESX = exports["es_extended"]:getSharedObject()
 
 	  while ESX.GetPlayerData().job == nil do
-		    Citizen.Wait(10)
+		  Wait(10)
 	  end
 
 	  ESX.PlayerData = ESX.GetPlayerData()
@@ -599,7 +596,7 @@ AddEventHandler('esx_drivingschooljob:loadLicenses', function(licenses)
 end)
 
 --Blip
-Citizen.CreateThread(function()
+CreateThread(function()
 
   for k,v in pairs(Config.Blip) do
 
@@ -620,7 +617,7 @@ Citizen.CreateThread(function()
 end)
 
 -- Display markers
-Citizen.CreateThread(function()
+CreateThread(function()
     while true do
         Wait(0)
 	      local coords = GetEntityCoords(GetPlayerPed(-1))
@@ -643,27 +640,13 @@ Citizen.CreateThread(function()
 end)
 
 -- Enter / Exit marker events
-Citizen.CreateThread(function()
+CreateThread(function()
   while true do
     Wait(0)
 	local coords      = GetEntityCoords(GetPlayerPed(-1))
       local isInMarker  = false
       local currentZone = nil
-	for a,v in pairs(Config.Theory) do
-        if(GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < v.Size.x) then
-          isInMarker  = true
-          currentZone = a
-        end
-      end
-	  if (isInMarker and not HasAlreadyEnteredMarker) or (isInMarker and LastZone ~= currentZone) then
-        HasAlreadyEnteredMarker = true
-        LastZone                = currentZone
-        TriggerEvent('esx_drivingschooljob:hasEnteredMarker', currentZone)
-      end
-      if not isInMarker and HasAlreadyEnteredMarker then
-        HasAlreadyEnteredMarker = false
-        TriggerEvent('esx_drivingschooljob:hasExitedMarker', LastZone)
-      end
+	
     if ESX.PlayerData.job ~= nil and ESX.PlayerData.job.name == 'driving' then
       local coords      = GetEntityCoords(GetPlayerPed(-1))
       local isInMarker  = false
@@ -682,16 +665,34 @@ Citizen.CreateThread(function()
       if not isInMarker and HasAlreadyEnteredMarker then
         HasAlreadyEnteredMarker = false
         TriggerEvent('esx_drivingschooljob:hasExitedMarker', LastZone)
+		print('ha salido')
       end
+	else 
+		for a,v in pairs(Config.Theory) do
+			if(GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < v.Size.x) then
+			  isInMarker  = true
+			  currentZone = a
+			end
+		end
+		  if (isInMarker and not HasAlreadyEnteredMarker) or (isInMarker and LastZone ~= currentZone) then
+			HasAlreadyEnteredMarker = true
+			LastZone                = currentZone
+			TriggerEvent('esx_drivingschooljob:hasEnteredMarker', currentZone)
+		  end
+		  if not isInMarker and HasAlreadyEnteredMarker then
+			HasAlreadyEnteredMarker = false
+			TriggerEvent('esx_drivingschooljob:hasExitedMarker', LastZone)
+			print('ha salido2')
+		  end
     end
   end
 end)
 
 
 -- Block UI
-Citizen.CreateThread(function()
+CreateThread(function()
     while true do
-		    Citizen.Wait(1)
+		    Wait(1)
 
     		if CurrentTest == 'theory' then
     		    local playerPed = PlayerPedId()
@@ -702,23 +703,22 @@ Citizen.CreateThread(function()
       			DisableControlAction(0, 142, true) -- MeleeAttackAlternate
       			DisableControlAction(0, 106, true) -- VehicleMouseControlOverride
     		else
-    			  Citizen.Wait(500)
+    			  Wait(500)
         end
     end
 end)
 
 -- Key Controls
-Citizen.CreateThread(function()
+CreateThread(function()
     while true do
-        Citizen.Wait(1)
+        Wait(1)
 
         if CurrentAction ~= nil then
-
-          SetTextComponentFormat('STRING')
-          AddTextComponentString(CurrentActionMsg)
-          DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+        SetTextComponentFormat('STRING')
+        AddTextComponentString(CurrentActionMsg)
+        DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 		  
-		if IsControlJustReleased(0, 245) then
+		if IsControlJustReleased(0, 206) then
 		  if CurrentAction == 'theory_menu' then
 				OpenDMVSchoolMenu()
 	        end
@@ -757,9 +757,9 @@ Citizen.CreateThread(function()
         end
 
         if IsControlJustReleased(0, Keys['F6']) and ESX.PlayerData.job ~= nil and ESX.PlayerData.job.name == 'driving' then
-            OpenDrivingSchoolMenu()
+          OpenDrivingSchoolMenu()
         else
-        	Citizen.Wait(100)
+        	Wait(100)
         end        
     end
 end)

@@ -1,14 +1,12 @@
 Config = {}
-
 Config.DrawDistance               = 100.0 -- How close would you need to come to the point for it to show?
 Config.MarkerType                 = 1 -- It Is what it sounds like
 Config.MarkerSize                 = {x = 1.5, y = 1.5, z = 0.5}
 Config.EnablePlayerManagement     = true -- Enable If you have esx_society installed!
 Config.EnableSocietyOwnedVehicles = false
-Config.MaxInService           = -1
-Config.TheoryPrice =   200
-
-Config.Locale                     = 'bg'
+Config.MaxInService = -1
+Config.TheoryPrice  = 200
+Config.Locale = 'en'
 
 Config.Zones = {
        
@@ -46,7 +44,6 @@ Config.Theory = {
 }
 
 Config.Blip = {
-
    Blip = {
       Pos     = {x = 212.38, y = -1397.26, z = 30.58},
       Sprite  = 530,
@@ -55,4 +52,3 @@ Config.Blip = {
       Colour  = 29,
     }
 }
-
