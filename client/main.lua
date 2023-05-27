@@ -28,11 +28,9 @@ GUI.Time                      = 0
 
 CreateThread(function()
   ESX = exports["es_extended"]:getSharedObject()
-
 	  while ESX.GetPlayerData().job == nil do
 		  Wait(10)
 	  end
-
 	  ESX.PlayerData = ESX.GetPlayerData()
 end)
 
@@ -90,7 +88,7 @@ ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'give', {
 	             end)
 elseif data.current.value == 'remove' then
       local elements = {
-                  {label = _U('traffic_remove'), value = 'trr'}}
+        {label = _U('traffic_remove'), value = 'trr'}}
 
       if ESX.PlayerData.job.grade_name == 'carinstr' or ESX.PlayerData.job.grade_name == 'examiner' then
 				table.insert(elements, {label = _U('car_remove'), value = 'carr'})
@@ -211,7 +209,6 @@ function OpenDMVSchoolMenu()
 	
 	end
 
-	
 	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'dmvschool_actions', {
 		title    = _U('theory'),
 		elements = elements,
@@ -230,13 +227,10 @@ function OpenDMVSchoolMenu()
 end)
 end
 
-
-
 RegisterNUICallback('question', function(data, cb)
 	SendNUIMessage({
 		openSection = 'question'
 	})
-
 	cb()
 end)
 
@@ -257,9 +251,7 @@ function OpenDrivingActionsMenu()
   local elements = {
     {label = _U('vehicle_list'), value = 'vehicle_list'},
     {label = _U('deposit_stock'), value = 'put_stock'},
-    {label = _U('withdraw_stock'), value = 'get_stock'},
-    {label = _U('cloakroom'), value = 'cloakroom'},
-    {label = _U('cloakroom2'), value = 'cloakroom'}
+    {label = _U('withdraw_stock'), value = 'get_stock'}
   }
   if Config.EnablePlayerManagement and ESX.PlayerData.job ~= nil and ESX.PlayerData.job.grade_name == 'boss' then
     table.insert(elements, {label = _U('boss_actions'), value = 'boss_actions'})
@@ -317,9 +309,9 @@ function OpenDrivingActionsMenu()
           else
 
             local elements = {
-			  --{label = 'Car', value = 'blista'},
-              --{label = 'Motor', value = 'sanchez'},
-              --{label = 'Truck', value = 'kart20'}
+			        {label = 'Car', value = 'blista'},
+              {label = 'Motor', value = 'sanchez'},
+              {label = 'Truck', value = 'mule'}
             }
 			
 			if ESX.PlayerData.job.grade_name == 'carinstr' then
@@ -373,28 +365,6 @@ function OpenDrivingActionsMenu()
             )
 
           end
-      end
-
-      if data.current.value == 'cloakroom' then
-        menu.close()
-        ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
-
-            if skin.sex == 0 then
-                TriggerEvent('skinchanger:loadClothes', skin, jobSkin.skin_male)
-            else
-                TriggerEvent('skinchanger:loadClothes', skin, jobSkin.skin_female)
-            end
-
-        end)
-      end
-
-      if data.current.value == 'cloakroom2' then
-        menu.close()
-        ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
-
-            TriggerEvent('skinchanger:loadSkin', skin)
-
-        end)
       end
 
       if data.current.value == 'put_stock' then
@@ -500,8 +470,7 @@ ESX.TriggerServerCallback('esx_drivingschooljob:getPlayerInventory', function(in
 
     end
 
-    ESX.UI.Menu.Open(
-      'default', GetCurrentResourceName(), 'stocks_menu',
+    ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'stocks_menu',
       {
         title    = _U('inventory'),
         elements = elements
@@ -597,7 +566,6 @@ end)
 
 --Blip
 CreateThread(function()
-
   for k,v in pairs(Config.Blip) do
 
     local blip = AddBlipForCoord(v.Pos.x, v.Pos.y, v.Pos.z)
@@ -607,13 +575,10 @@ CreateThread(function()
     SetBlipScale  (blip, v.Scale)
     SetBlipColour (blip, v.Colour)
     SetBlipAsShortRange(blip, true)
-
     BeginTextCommandSetBlipName("STRING")
     AddTextComponentString(_U('map_blip'))
     EndTextCommandSetBlipName(blip)
-
   end
-
 end)
 
 -- Display markers
@@ -665,7 +630,6 @@ CreateThread(function()
       if not isInMarker and HasAlreadyEnteredMarker then
         HasAlreadyEnteredMarker = false
         TriggerEvent('esx_drivingschooljob:hasExitedMarker', LastZone)
-		print('ha salido')
       end
 	else 
 		for a,v in pairs(Config.Theory) do
@@ -675,14 +639,14 @@ CreateThread(function()
 			end
 		end
 		  if (isInMarker and not HasAlreadyEnteredMarker) or (isInMarker and LastZone ~= currentZone) then
-			HasAlreadyEnteredMarker = true
-			LastZone                = currentZone
-			TriggerEvent('esx_drivingschooljob:hasEnteredMarker', currentZone)
+			 HasAlreadyEnteredMarker = true
+			 LastZone                = currentZone
+			 TriggerEvent('esx_drivingschooljob:hasEnteredMarker', currentZone)
 		  end
+
 		  if not isInMarker and HasAlreadyEnteredMarker then
-			HasAlreadyEnteredMarker = false
-			TriggerEvent('esx_drivingschooljob:hasExitedMarker', LastZone)
-			print('ha salido2')
+			 HasAlreadyEnteredMarker = false
+			 TriggerEvent('esx_drivingschooljob:hasExitedMarker', LastZone)
 		  end
     end
   end
@@ -714,9 +678,10 @@ CreateThread(function()
         Wait(1)
 
         if CurrentAction ~= nil then
-        SetTextComponentFormat('STRING')
-        AddTextComponentString(CurrentActionMsg)
-        DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+
+          SetTextComponentFormat('STRING')
+          AddTextComponentString(CurrentActionMsg)
+          DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 		  
 		if IsControlJustReleased(0, 206) then
 		  if CurrentAction == 'theory_menu' then
@@ -759,7 +724,7 @@ CreateThread(function()
         if IsControlJustReleased(0, Keys['F6']) and ESX.PlayerData.job ~= nil and ESX.PlayerData.job.name == 'driving' then
           OpenDrivingSchoolMenu()
         else
-        	Wait(100)
+        	--Citizen.Wait(100)
         end        
     end
 end)

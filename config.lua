@@ -36,7 +36,7 @@ Config.Zones = {
 
 Config.Theory = {
    DMVSchool = {
-		Pos   = {x = 206.99, y = -1386.7, z = 30.741},
+		Pos   = {x = 207.745056, y = -1384.219727, z = 30.577271},
 		Size  = {x = 1.5, y = 1.5, z = 1.0},
 		Color = {r = 204, g = 204, b = 0},
 		Type  = 32

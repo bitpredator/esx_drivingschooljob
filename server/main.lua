@@ -71,6 +71,7 @@ end)
 --end)
 
 ESX.RegisterServerCallback('esx_drivingschooljob:getPlayerInventory', function(source, cb)
+
   local xPlayer    = ESX.GetPlayerFromId(source)
   local items      = xPlayer.inventory
 
@@ -99,3 +100,4 @@ AddEventHandler('esx_drivingschooljob:pay', function(price)
 	xPlayer.removeMoney(price)
 	TriggerClientEvent('esx:showNotification', _source, _U('you_paid', ESX.Math.GroupDigits(price)))
 end)
+

@@ -37,8 +37,6 @@ Locales['bg'] = {
   ['inventory']          = 'Inventory',
   ['you_added']                 = 'Прибрахте в шкафа x',
   ['you_removed']               = 'Взехте x',
-  ['cloakroom']                 = 'Работни дрехи',
-  ['cloakroom2']                 = 'Цивилни дрехи',
   ['veh_stored']                 = 'Натиснете ~INPUT_CONTEXT~ ,за да приберете МПС-то',
   ['map_blip']                 = 'Автошкола'
 }

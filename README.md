@@ -9,8 +9,7 @@ It gives you a chance to become an driving instructor. The instructors can only 
 * Examiners can only give licenses to the others via F6 menu. 
 * Billing option which allows the instructors to get money per lesson. * You can add your own work clothes through the database. * You can choose between two languages: English and Bulgarian(of course you can PR in github more  I will include them) 
 
- **To do** 
-* Integration of dmvschool Theory test. 
+**To do** 
 * Notifications
 
   **Preview** https://streamable.com/11ysbf

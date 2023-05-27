@@ -10,17 +10,13 @@ var lastClick = 0;
 
 function getRandomQuestion() {
 	var random = Math.floor(Math.random() * nbPossibleQuestions);
-
 	while (true) {
 		if (questionUsed.indexOf(random) === -1) {
 			break;
 		}
-
 		random = Math.floor(Math.random() * nbPossibleQuestions);
 	}
-
 	questionUsed.push(random);
-
 	return random;
 }
 
